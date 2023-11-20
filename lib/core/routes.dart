@@ -1,0 +1,43 @@
+import 'package:assignment12_front_end/presentation/screens/auth/login_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/auth/providers/login_provider.dart';
+import 'package:assignment12_front_end/presentation/screens/auth/providers/signup_provider.dart';
+import 'package:assignment12_front_end/presentation/screens/auth/signup_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/home/home_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/splash/splash_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/user/edit_profile_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+
+class Routes {
+  static Route? onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case LoginScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => ChangeNotifierProvider(
+              create: (BuildContext context) => LoginProvider(context),
+              child: const LoginScreen()),
+        );
+      case SignUpScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => ChangeNotifierProvider(
+              create: (BuildContext context) => SignupProvider(context),
+              child: const SignUpScreen()),
+        );
+      case HomeScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => const HomeScreen(),
+        );
+      case SplashScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => const SplashScreen(),
+        );
+      case EditProfileScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => const EditProfileScreen(),
+        );
+
+      default:
+        return null;
+    }
+  }
+}
