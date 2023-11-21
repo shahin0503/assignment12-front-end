@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:assignment12_front_end/core/routes.dart';
 import 'package:assignment12_front_end/core/ui.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_cubit.dart';
+import 'package:assignment12_front_end/logic/cubits/users_cubit/users_cubit.dart';
 import 'package:assignment12_front_end/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => UserCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UsersCubit(),
         ),
       ],
       child: MaterialApp(

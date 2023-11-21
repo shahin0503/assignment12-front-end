@@ -1,15 +1,11 @@
-import 'dart:io';
-
 class UserModel {
   String? id;
   String? fullName;
   String? email;
   String? password;
   String? bio;
-  File? image;
+  String? image;
   String? phoneNumber;
-  String? updatedAt;
-  String? createdAt;
 
   UserModel({
     this.id,
@@ -19,8 +15,6 @@ class UserModel {
     this.bio,
     this.image,
     this.phoneNumber,
-    this.updatedAt,
-    this.createdAt,
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -31,8 +25,6 @@ class UserModel {
     bio = json['bio'];
     image = json['image'];
     phoneNumber = json['phoneNumber'];
-    updatedAt = json['updatedAt'];
-    createdAt = json['createdAt'];
   }
 
   Map<String, dynamic> toJson() {
@@ -44,8 +36,7 @@ class UserModel {
     data['bio'] = this.bio;
     data['image'] = this.image;
     data['phoneNumber'] = this.phoneNumber;
-    data['updatedAt'] = this.updatedAt;
-    data['createdAt'] = this.createdAt;
+
     return data;
   }
 }

@@ -66,7 +66,7 @@ class UserCubit extends Cubit<UserState> {
     emit(UserLoadingState());
 
     try {
-      UserModel userModel = await _userRepository.createAccount(
+      UserModel userModel = await _userRepository.signup(
         email: email,
         password: password,
       );

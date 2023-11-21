@@ -1,3 +1,4 @@
+import 'package:assignment12_front_end/data/models/user/user_model.dart';
 import 'package:assignment12_front_end/presentation/screens/auth/login_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/auth/providers/login_provider.dart';
 import 'package:assignment12_front_end/presentation/screens/auth/providers/signup_provider.dart';
@@ -5,6 +6,7 @@ import 'package:assignment12_front_end/presentation/screens/auth/signup_screen.d
 import 'package:assignment12_front_end/presentation/screens/home/home_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/splash/splash_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/user/edit_profile_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/user/user_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +33,11 @@ class Routes {
         return CupertinoPageRoute(
           builder: (context) => const SplashScreen(),
         );
+      case UserDetailsScreen.routeName:
+        return CupertinoPageRoute(
+            builder: (context) => UserDetailsScreen(
+                  userModel: settings.arguments as UserModel,
+                ));
       case EditProfileScreen.routeName:
         return CupertinoPageRoute(
           builder: (context) => const EditProfileScreen(),

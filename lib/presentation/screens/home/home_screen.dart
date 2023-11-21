@@ -1,7 +1,7 @@
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_state.dart';
 import 'package:assignment12_front_end/presentation/screens/home/blogs_screen.dart';
-import 'package:assignment12_front_end/presentation/screens/home/portfolios_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/home/user_feed_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/home/profile_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   List<Widget> screens = const [
-    PortfoliosScreen(),
+    UserFeedScreen(),
     BlogsScreen(),
     ProfileScreen(),
   ];

@@ -6,12 +6,12 @@ import 'package:dio/dio.dart';
 
 class UserRepository {
   final _api = Api();
-  Future<UserModel> createAccount({
+  Future<UserModel> signup({
     required String email,
     required String password,
   }) async {
     try {
-      Response response = await _api.sendRequest.post('/user/createAccount',
+      Response response = await _api.sendRequest.post('/users/signup',
           data: jsonEncode({
             'email': email,
             'password': password,
@@ -35,7 +35,7 @@ class UserRepository {
     required String password,
   }) async {
     try {
-      Response response = await _api.sendRequest.post('/user/signIn',
+      Response response = await _api.sendRequest.post('/users/signIn',
           data: jsonEncode({
             'email': email,
             'password': password,
@@ -57,7 +57,7 @@ class UserRepository {
   Future<UserModel> updateUser(UserModel userModel) async {
     try {
       Response response = await _api.sendRequest
-          .put('/user/${userModel.id}', data: jsonEncode(userModel.toJson()));
+          .put('/users/${userModel.id}', data: jsonEncode(userModel.toJson()));
 
       ApiResponse apiResponse = ApiResponse.fromResponse(response);
 
@@ -67,6 +67,23 @@ class UserRepository {
 
       //convert raw data to model
       return UserModel.fromJson(apiResponse.data);
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<List<UserModel>> fetchAllUsers() async {
+    try {
+      Response response = await _api.sendRequest.get('/users');
+
+      ApiResponse apiResponse = ApiResponse.fromResponse(response);
+
+      if (!apiResponse.success) {
+        throw apiResponse.message.toString();
+      }
+      return (apiResponse.data as List<dynamic>)
+          .map((json) => UserModel.fromJson(json))
+          .toList();
     } catch (error) {
       rethrow;
     }
