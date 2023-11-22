@@ -34,56 +34,64 @@ class _BlogsScreenState extends State<BlogsScreen> {
             itemCount: state.blogs.length,
             itemBuilder: (context, index) {
               final blog = state.blogs[index];
-              return CupertinoButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    BlogDetailsScreen.routeName,
-                    arguments: blog,
-                  );
-                },
-                padding: EdgeInsets.zero,
-                child: Row(
-                  children: [
-                    CachedNetworkImage(
-                      width: MediaQuery.of(context).size.width / 3,
-                      imageUrl: '${blog.image}',
-                    ),
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${blog.title}',
-                            style: TextStyles.body1.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            '${blog.category}',
-                            style: TextStyles.body2.copyWith(
-                              color: AppColors.textLight,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const GapWidget(
-                            size: -10,
-                          ),
-                          Text(
-                            '${blog.description}',
-                            style: TextStyles.body2.copyWith(
-                              color: AppColors.textLight,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        ],
+              return Card(
+                elevation: 4,
+                child: CupertinoButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      BlogDetailsScreen.routeName,
+                      arguments: blog,
+                    );
+                  },
+                  padding: EdgeInsets.zero,
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: CachedNetworkImage(
+                          width: MediaQuery.of(context).size.width / 4,
+                          height: MediaQuery.of(context).size.width / 4,
+                          fit: BoxFit.cover,
+                          imageUrl: '${blog.image}',
+                        ),
                       ),
-                    ),
-                  ],
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${blog.title}',
+                              style: TextStyles.body1.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '${blog.category}',
+                              style: TextStyles.body2.copyWith(
+                                color: AppColors.textLight,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const GapWidget(
+                              size: -10,
+                            ),
+                            Text(
+                              '${blog.description}',
+                              style: TextStyles.body2.copyWith(
+                                color: AppColors.textLight,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             },
