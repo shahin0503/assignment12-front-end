@@ -81,6 +81,17 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  Future<void> getUserByUserId(String userId) async {
+    emit(UserLoadingState());
+    try {
+      UserModel userModel = await _userRepository.getUserById(userId);
+
+      emit(UserLoggedInState(userModel));
+    } catch (error) {
+      emit(UserErrorState(error.toString()));
+    }
+  }
+
   Future<bool> updateUser(UserModel userModel) async {
     emit(UserLoadingState());
 

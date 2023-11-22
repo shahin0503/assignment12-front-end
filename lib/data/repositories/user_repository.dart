@@ -75,6 +75,24 @@ class UserRepository {
     }
   }
 
+  Future<UserModel> getUserById(String userId) async {
+    try {
+      Response response = await _api.sendRequest.get('/users/$userId');
+
+      ApiResponse apiResponse = ApiResponse.fromResponse(response);
+
+      if (!apiResponse.success) {
+        throw apiResponse.message.toString();
+      }
+
+      //convert raw data to model
+      return UserModel.fromJson(apiResponse.data);
+      
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   Future<List<UserModel>> fetchAllUsers() async {
     try {
       Response response = await _api.sendRequest.get('/users');
@@ -91,4 +109,6 @@ class UserRepository {
       rethrow;
     }
   }
+
+  
 }
