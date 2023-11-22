@@ -34,56 +34,72 @@ class _UserFeedScreenState extends State<UserFeedScreen> {
           itemCount: state.users.length,
           itemBuilder: (context, index) {
             final user = state.users[index];
-            return CupertinoButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  UserDetailsScreen.routeName,
-                  arguments: user,
-                );
-              },
-              padding: EdgeInsets.zero,
-              child: Row(
-                children: [
-                  CachedNetworkImage(
-                    width: MediaQuery.of(context).size.width / 3,
-                    imageUrl: '${user.image}',
-                  ),
-                  Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${user.fullName}',
-                          style: TextStyles.body1.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+            return Card(
+              elevation: 4.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: CupertinoButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    UserDetailsScreen.routeName,
+                    arguments: user,
+                  );
+                },
+                padding: EdgeInsets.zero,
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          width: MediaQuery.of(context).size.width / 3,
+                          height: MediaQuery.of(context).size.width / 3,
+                          fit: BoxFit.cover,
+                          imageUrl: '${user.image}',
                         ),
-                        Text(
-                          '${user.email}',
-                          style: TextStyles.body2.copyWith(
-                            color: AppColors.textLight,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const GapWidget(
-                          size: -10,
-                        ),
-                        Text(
-                          '${user.bio}',
-                          style: TextStyles.body2.copyWith(
-                            color: AppColors.textLight,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      ],
+                      ),
                     ),
-                  ),
-                ],
+                    const GapWidget(
+                      size: -10,
+                    ),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${user.fullName}',
+                            style: TextStyles.body1.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '${user.email}',
+                            style: TextStyles.body2.copyWith(
+                              color: AppColors.textLight,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const GapWidget(
+                            size: -10,
+                          ),
+                          Text(
+                            '${user.bio}',
+                            style: TextStyles.body2.copyWith(
+                              color: AppColors.textLight,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
