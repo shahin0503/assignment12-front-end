@@ -21,7 +21,7 @@ class ProjectModel {
     id = json['_id'];
     title = json['title'];
     description = json['description'];
-    technologiesUsed = json['technologies'].cast<String>();
+    technologiesUsed = List<String>.from(json['technologies']);
     userId = json['owner'];
     demoUrl = json['demoLink'];
     gitUrl = json['githubLink'];

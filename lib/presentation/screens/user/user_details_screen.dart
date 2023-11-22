@@ -24,9 +24,13 @@ class UserDetailsScreen extends StatefulWidget {
 class _UserDetailsScreenState extends State<UserDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    final userId = widget.userModel.id as String;
+
+    context.read<ProjectCubit>().fetchProjectByUserId(userId);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.userModel.fullName}'),
+        title: const Text('Portfolio'),
       ),
       body: SafeArea(
         child: BlocBuilder<ProjectCubit, ProjectState>(
@@ -43,55 +47,117 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Flexible(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Center(
-                              child: CachedNetworkImage(
-                                width: MediaQuery.of(context).size.width / 3,
-                                imageUrl: '${widget.userModel.image}',
-                              ),
-                            ),
-                            const GapWidget(
-                              size: -10,
-                            ),
-                            Flexible(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${widget.userModel.fullName}',
-                                    style: TextStyles.body1.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const GapWidget(),
-                                  Text(
-                                    '${widget.userModel.email}',
-                                    style: TextStyles.body2,
-                                  ),
-                                  const GapWidget(),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        const GapWidget(),
-                        Text(
-                          'Bio',
-                          style: TextStyles.body1.copyWith(
-                            fontWeight: FontWeight.bold,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(
+                        child: ClipOval(
+                          child: CachedNetworkImage(
+                            width: MediaQuery.of(context).size.width / 3,
+                            height: MediaQuery.of(context).size.width / 3,
+                            fit: BoxFit.cover,
+                            imageUrl: '${widget.userModel.image}',
                           ),
                         ),
-                        Text(
-                          '${widget.userModel.bio}',
-                          style: TextStyles.body2,
+                      ),
+                      const GapWidget(
+                        size: -10,
+                      ),
+                      Center(
+                        child: Text(
+                          '${widget.userModel.fullName}',
+                          style: TextStyles.body1.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.accent
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      const GapWidget(
+                        size: -15,
+                      ),
+                      Center(
+                        child: Text(
+                          '${widget.userModel.email}',
+                          style: TextStyles.body1.copyWith(
+                            color: AppColors.text,
+                          ),
+                        ),
+                      ),
+                      const GapWidget(),
+                      Text(
+                        'Bio',
+                        style: TextStyles.body1.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.accent
+                        ),
+                      ),
+                      Text('${widget.userModel.bio}', style: TextStyles.body2,),
+                      const GapWidget(size: -5,),
+                      Text(
+                        'Projects',
+                        style: TextStyles.body1.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      for (var project in state.projects)
+                        Card(
+                          elevation: 2,
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              dividerColor: Colors.transparent,
+                            ),
+                            child: ExpansionTile(
+                              title: Text(
+                                project.title!,
+                                style: TextStyles.body1.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color:AppColors.accent,
+                                ),
+                              ),
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(left: 16.0),
+                                  alignment: Alignment.topLeft,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Description:',
+                                        style: TextStyles.body2.copyWith(
+                                          color: AppColors.accent,
+                                        ),
+                                      ),
+                                      Text(project.description!),
+                                      Text(
+                                        'Technologies used:',
+                                        style: TextStyles.body2.copyWith(
+                                          color: AppColors.accent,
+                                        ),
+                                      ),
+                                      Text(project.technologiesUsed!.join(',')),
+                                      Text(
+                                        'GitUrl:',
+                                        style: TextStyles.body2.copyWith(
+                                          color: AppColors.accent,
+                                        ),
+                                      ),
+                                      Text(project.gitUrl!),
+                                      Text(
+                                        'DemoUrl:',
+                                        style: TextStyles.body2.copyWith(
+                                          color: AppColors.accent,
+                                        ),
+                                      ),
+                                      Text(project.demoUrl!),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                    ],
                   ),
                 ),
               ],

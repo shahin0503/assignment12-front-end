@@ -54,8 +54,8 @@ class _UserFeedScreenState extends State<UserFeedScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: ClipOval(
                         child: CachedNetworkImage(
-                          width: MediaQuery.of(context).size.width / 3,
-                          height: MediaQuery.of(context).size.width / 3,
+                          width: MediaQuery.of(context).size.width / 4,
+                          height: MediaQuery.of(context).size.width / 4,
                           fit: BoxFit.cover,
                           imageUrl: '${user.image}',
                         ),

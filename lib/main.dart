@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:assignment12_front_end/core/routes.dart';
 import 'package:assignment12_front_end/core/ui.dart';
 import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_cubit.dart';
+import 'package:assignment12_front_end/logic/cubits/project_cubit/project_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/users_cubit/users_cubit.dart';
 import 'package:assignment12_front_end/presentation/screens/splash/splash_screen.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => BlogCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ProjectCubit(),
         ),
       ],
       child: MaterialApp(

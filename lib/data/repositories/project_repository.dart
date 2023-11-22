@@ -7,7 +7,7 @@ class ProjectRepository {
 
   Future<List<ProjectModel>> fetchProjectByUser(String userId) async {
     try {
-      Response response = await _api.sendRequest.get('/project/$userId');
+      Response response = await _api.sendRequest.get('/users/$userId/projects');
 
       ApiResponse apiResponse = ApiResponse.fromResponse(response);
 
