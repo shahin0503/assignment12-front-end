@@ -2,8 +2,8 @@ import 'package:assignment12_front_end/core/ui.dart';
 import 'package:assignment12_front_end/data/models/user/user_model.dart';
 import 'package:assignment12_front_end/logic/cubits/project_cubit/project_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/project_cubit/project_state.dart';
-import 'package:assignment12_front_end/presentation/widgets/circular_image.dart';
 import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,92 +29,74 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         title: Text('${widget.userModel.fullName}'),
       ),
       body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+        child: BlocBuilder<ProjectCubit, ProjectState>(
+          builder: (context, state) {
+            if (state is ProjectLoadingState && state.projects.isEmpty) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is ProjectErrorState && state.projects.isEmpty) {
+              return Text(state.message);
+            }
+            return ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: CircularImage(
-                            imageUrl: '${widget.userModel.image}',
-                            size: 100.00,
+                        Row(
+                          children: [
+                            Center(
+                              child: CachedNetworkImage(
+                                width: MediaQuery.of(context).size.width / 3,
+                                imageUrl: '${widget.userModel.image}',
+                              ),
+                            ),
+                            const GapWidget(
+                              size: -10,
+                            ),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${widget.userModel.fullName}',
+                                    style: TextStyles.body1.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const GapWidget(),
+                                  Text(
+                                    '${widget.userModel.email}',
+                                    style: TextStyles.body2,
+                                  ),
+                                  const GapWidget(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const GapWidget(),
+                        Text(
+                          'Bio',
+                          style: TextStyles.body1.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const GapWidget(
-                          size: -10,
-                        ),
-                        Flexible(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '${widget.userModel.fullName}',
-                                style: TextStyles.body1.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const GapWidget(),
-                              Text(
-                                '${widget.userModel.email}',
-                                style: TextStyles.body2,
-                              ),
-                              const GapWidget(),
-                            ],
-                          ),
+                        Text(
+                          '${widget.userModel.bio}',
+                          style: TextStyles.body2,
                         ),
                       ],
                     ),
-                    const GapWidget(),
-                    Text(
-                      'Bio',
-                      style: TextStyles.body1.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      '${widget.userModel.bio}',
-                      style: TextStyles.body2,
-                    ),
-                    // BlocBuilder<ProjectCubit, ProjectState>(
-                    //   builder: (context, state) {
-                    //     if (state is ProjectLoadingState &&
-                    //         state.projects.isEmpty) {
-                    //       return const CircularProgressIndicator();
-                    //     } else if (state is ProjectErrorState &&
-                    //         state.projects.isEmpty) {
-                    //       return Text(state.message);
-                    //     } else if (state is ProjectLoadedState &&
-                    //         state.projects.isEmpty) {
-                    //       return const Text('No projects added!!!');
-                    //     }
-                    //     return ListView.builder(
-                    //       itemCount: state.projects.length,
-                    //       itemBuilder: (context, index) {
-                    //         final project = state.projects[index];
-
-                    //         return Card(
-                    //           child: Column(
-                    //             children: [
-                    //               Text('${project.title}'),
-                    //               Text('${project.description}'),
-                    //             ],
-                    //           ),
-                    //         );
-                    //       },
-                    //     );
-                    //   },
-                    // )
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         ),
       ),
     );

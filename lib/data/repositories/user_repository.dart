@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:assignment12_front_end/core/api.dart';
 import 'package:assignment12_front_end/data/models/user/user_model.dart';
+import 'package:assignment12_front_end/logic/services/token_manager.dart';
 import 'package:dio/dio.dart';
 
 class UserRepository {
@@ -47,6 +48,8 @@ class UserRepository {
         throw apiResponse.message.toString();
       }
 
+      TokenManager.saveToken(apiResponse.data['token']);
+
       //convert raw data to model
       return UserModel.fromJson(apiResponse.data);
     } catch (error) {
@@ -57,7 +60,7 @@ class UserRepository {
   Future<UserModel> updateUser(UserModel userModel) async {
     try {
       Response response = await _api.sendRequest
-          .put('/users/${userModel.id}', data: jsonEncode(userModel.toJson()));
+          .put('/users', data: jsonEncode(userModel.toJson()));
 
       ApiResponse apiResponse = ApiResponse.fromResponse(response);
 

@@ -2,8 +2,8 @@ import 'package:assignment12_front_end/core/ui.dart';
 import 'package:assignment12_front_end/logic/cubits/users_cubit/users_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/users_cubit/users_state.dart';
 import 'package:assignment12_front_end/presentation/screens/user/user_details_screen.dart';
-import 'package:assignment12_front_end/presentation/widgets/circular_image.dart';
 import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +29,7 @@ class _UserFeedScreenState extends State<UserFeedScreen> {
             child: Text(state.message.toString()),
           );
         }
+
         return ListView.builder(
           itemCount: state.users.length,
           itemBuilder: (context, index) {
@@ -44,7 +45,10 @@ class _UserFeedScreenState extends State<UserFeedScreen> {
               padding: EdgeInsets.zero,
               child: Row(
                 children: [
-                  CircularImage(imageUrl: '${user.image}'),
+                  CachedNetworkImage(
+                    width: MediaQuery.of(context).size.width / 3,
+                    imageUrl: '${user.image}',
+                  ),
                   Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

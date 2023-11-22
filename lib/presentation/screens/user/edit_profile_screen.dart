@@ -5,6 +5,7 @@ import 'package:assignment12_front_end/logic/cubits/user_cubit/user_state.dart';
 import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
 import 'package:assignment12_front_end/presentation/widgets/primary_button.dart';
 import 'package:assignment12_front_end/presentation/widgets/primary_textfield.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,8 +52,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        CircleAvatar(
-          radius: 100,
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 60),
+            child: CachedNetworkImage(
+                width: MediaQuery.of(context).size.width / 3,
+                imageUrl: '${userModel.image}',
+              ),
+          ),
         ),
         const GapWidget(),
         Text(
@@ -62,7 +69,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
         const GapWidget(
-          size: -10,
+          
         ),
         PrimaryTextField(
           labelText: 'Full Name',

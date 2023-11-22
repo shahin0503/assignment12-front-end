@@ -1,7 +1,8 @@
+import 'package:assignment12_front_end/logic/services/token_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-const String baseURL = 'http://10.1.86.148:3000/api';
+const String baseURL = 'http://192.168.0.106:3000/api';
 const Map<String, dynamic> defaultHeaders = {
   'Content-Type': 'application/json'
 };
@@ -17,6 +18,18 @@ class Api {
       requestHeader: true,
       responseBody: true,
       responseHeader: true,
+    ));
+
+    _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        final String? token = await TokenManager.getToken();
+
+        if (token != null) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
+
+        return handler.next(options);
+      },
     ));
   }
 

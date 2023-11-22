@@ -1,4 +1,12 @@
+import 'package:assignment12_front_end/core/ui.dart';
+import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_cubit.dart';
+import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_state.dart';
+import 'package:assignment12_front_end/presentation/screens/blog/blog_details_screen.dart';
+import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BlogsScreen extends StatefulWidget {
   const BlogsScreen({super.key});
@@ -10,8 +18,84 @@ class BlogsScreen extends StatefulWidget {
 class _BlogsScreenState extends State<BlogsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black54,
+    return Scaffold(
+      body: BlocBuilder<BlogCubit, BlogState>(
+        builder: (context, state) {
+          if (state is BlogLoadingState && state.blogs.isEmpty) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is BlogErrorState && state.blogs.isEmpty) {
+            return Center(
+              child: Text(state.message),
+            );
+          }
+          return ListView.builder(
+            itemCount: state.blogs.length,
+            itemBuilder: (context, index) {
+              final blog = state.blogs[index];
+              return CupertinoButton(
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    BlogDetailsScreen.routeName,
+                    arguments: blog,
+                  );
+                },
+                padding: EdgeInsets.zero,
+                child: Row(
+                  children: [
+                    CachedNetworkImage(
+                      width: MediaQuery.of(context).size.width / 3,
+                      imageUrl: '${blog.image}',
+                    ),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${blog.title}',
+                            style: TextStyles.body1.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            '${blog.category}',
+                            style: TextStyles.body2.copyWith(
+                              color: AppColors.textLight,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const GapWidget(
+                            size: -10,
+                          ),
+                          Text(
+                            '${blog.description}',
+                            style: TextStyles.body2.copyWith(
+                              color: AppColors.textLight,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(
+          Icons.add_task,
+        ),
+      ),
     );
   }
 }

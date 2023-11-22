@@ -2,6 +2,7 @@ import 'package:assignment12_front_end/data/models/user/user_model.dart';
 import 'package:assignment12_front_end/data/repositories/user_repository.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_state.dart';
 import 'package:assignment12_front_end/logic/services/preferences.dart';
+import 'package:assignment12_front_end/logic/services/token_manager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserCubit extends Cubit<UserState> {
@@ -96,6 +97,7 @@ class UserCubit extends Cubit<UserState> {
 
   void signOut() async {
     await Preferences.clear();
+    await TokenManager.deleteToken();
     emit(UserLoggedOutState());
   }
 }
