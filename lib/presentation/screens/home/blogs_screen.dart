@@ -1,4 +1,5 @@
 import 'package:assignment12_front_end/core/ui.dart';
+import 'package:assignment12_front_end/data/models/blog/blog_model.dart';
 import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_state.dart';
 import 'package:assignment12_front_end/presentation/screens/blog/blog_details_screen.dart';
@@ -104,6 +105,9 @@ class _BlogsScreenState extends State<BlogsScreen> {
           Navigator.pushNamed(
             context,
             CreateEditBlogScreen.routeName,
+            arguments: BlogPreferences(
+              blogChoice: false,
+            ),
           );
         },
         child: const Icon(

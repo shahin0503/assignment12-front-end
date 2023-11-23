@@ -4,48 +4,37 @@ import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_cubit.dart';
 import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
 import 'package:assignment12_front_end/presentation/widgets/primary_button.dart';
 import 'package:assignment12_front_end/presentation/widgets/primary_textfield.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateEditBlogScreen extends StatefulWidget {
-  final BlogPreferences blogPreferences;
   const CreateEditBlogScreen({
     super.key,
-    required this.blogPreferences,
   });
 
-  static const routeName = 'create-edit-blog';
+  static const routeName = 'create-blog';
 
   @override
   State<CreateEditBlogScreen> createState() => _CreateEditBlogScreenState();
 }
 
 class _CreateEditBlogScreenState extends State<CreateEditBlogScreen> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
   String _selectedCategory = 'Comedy';
-  String imageUrl = '';
 
   @override
   void initState() {
     super.initState();
-    if (widget.blogPreferences.blogChoice) {
-      imageUrl = widget.blogPreferences.blogModel!.image!;
-      _titleController.text = widget.blogPreferences.blogModel!.title!;
-      _selectedCategory = widget.blogPreferences.blogModel!.category!;
-      _descriptionController.text =
-          widget.blogPreferences.blogModel!.description!;
-    }
+    _titleController = TextEditingController();
+    _descriptionController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.blogPreferences.blogChoice ? 'Edit Blog' : 'Create Blog',
-        ),
+        title: const Text('Create Blog'),
       ),
       body: SafeArea(
         child: ListView(
@@ -56,12 +45,12 @@ class _CreateEditBlogScreenState extends State<CreateEditBlogScreen> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(8.0),
-                    child: CachedNetworkImage(
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: MediaQuery.of(context).size.width / 2,
-                      fit: BoxFit.cover,
-                      imageUrl: imageUrl,
-                    ),
+                    // child: CachedNetworkImage(
+                    //   width: MediaQuery.of(context).size.width / 2,
+                    //   height: MediaQuery.of(context).size.width / 2,
+                    //   fit: BoxFit.cover,
+                    //   imageUrl: '${widget.blog?.image}',
+                    // ),
                   ),
                   const GapWidget(),
                   PrimaryTextField(
@@ -109,26 +98,12 @@ class _CreateEditBlogScreenState extends State<CreateEditBlogScreen> {
                   ),
                   PrimaryButton(
                     onPressed: () {
-                      if (!widget.blogPreferences.blogChoice) {
-                        final newBlog = BlogModel(
-                          title: _titleController.text,
-                          description: _descriptionController.text,
-                          category: _selectedCategory,
-                        );
-                        context.read<BlogCubit>().addBlog(newBlog);
-                      } else {
-                        final updatedBlog = BlogModel(
-                          title: _titleController.text,
-                          description: _descriptionController.text,
-                          category: _selectedCategory,
-                        );
-                        context.read<BlogCubit>().updateBlog(
-                              updatedBlog,
-                              widget.blogPreferences.blogModel!.id!,
-                            );
-                      }
-
-                      Navigator.pop(context);
+                      final newBlog = BlogModel(
+                        title: _titleController.text,
+                        description: _descriptionController.text,
+                        category: _selectedCategory,
+                      );
+                      context.read<BlogCubit>().addBlog(newBlog);
                     },
                     text: 'Save',
                   )

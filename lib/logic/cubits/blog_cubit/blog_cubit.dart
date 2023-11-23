@@ -35,11 +35,11 @@ class BlogCubit extends Cubit<BlogState> {
   }
 
   // Update a blog
-  void updateBlog(BlogModel updatedBlog) async {
+  void updateBlog(BlogModel updatedBlog, String blogId) async {
     emit(BlogLoadingState(blogs: state.blogs));
 
     try {
-      await _blogRepository.updateBlog(updatedBlog);
+      await _blogRepository.updateBlog(updatedBlog, blogId);
       // Fetch all blogs again after updating
       getAllBlogs();
     } catch (error) {

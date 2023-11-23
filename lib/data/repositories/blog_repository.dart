@@ -37,12 +37,12 @@ class BlogRepository {
     }
   }
 
-  Future<void> updateBlog(BlogModel updatedBlog) async {
+  Future<void> updateBlog(BlogModel updatedBlog, String blogId) async {
     try {
       // Assume you have a method to convert BlogModel to JSON
       Map<String, dynamic> blogJson = updatedBlog.toJson();
-      Response response = await _api.sendRequest
-          .put('/blogs/${updatedBlog.id}', data: blogJson);
+      Response response =
+          await _api.sendRequest.put('/blogs/$blogId', data: blogJson);
 
       ApiResponse apiResponse = ApiResponse.fromResponse(response);
 

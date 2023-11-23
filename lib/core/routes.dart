@@ -47,7 +47,9 @@ class Routes {
         );
       case CreateEditBlogScreen.routeName:
         return CupertinoPageRoute(
-          builder: (context) => const CreateEditBlogScreen(),
+          builder: (context) => CreateEditBlogScreen(
+            blogPreferences: settings.arguments as BlogPreferences,
+          ),
         );
       case BlogDetailsScreen.routeName:
         return CupertinoPageRoute(

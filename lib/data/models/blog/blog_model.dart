@@ -38,3 +38,13 @@ class BlogModel {
     return data;
   }
 }
+
+class BlogPreferences {
+  final bool blogChoice;
+  final BlogModel? blogModel;
+
+  BlogPreferences({
+    required this.blogChoice,
+    this.blogModel,
+  });
+}
