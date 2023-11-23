@@ -3,7 +3,9 @@ import 'package:assignment12_front_end/data/models/user/user_model.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_state.dart';
 import 'package:assignment12_front_end/presentation/screens/user/edit_profile_screen.dart';
+import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
 import 'package:assignment12_front_end/presentation/widgets/link_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,13 +47,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '${userModel.fullName}',
-              style: TextStyles.heading3,
+            Center(
+              child: ClipOval(
+                child: CachedNetworkImage(
+                  width: MediaQuery.of(context).size.width / 3,
+                  height: MediaQuery.of(context).size.width / 3,
+                  fit: BoxFit.cover,
+                  imageUrl: '${userModel.image}',
+                ),
+              ),
             ),
-            Text(
-              '${userModel.email}',
-              style: TextStyles.body2,
+            const GapWidget(),
+            Center(
+              child: Text(
+                '${userModel.fullName}',
+                style: TextStyles.heading3,
+              ),
+            ),
+            Center(
+              child: Text(
+                '${userModel.email}',
+                style: TextStyles.body2,
+              ),
             ),
             Text(
               '${userModel.bio}',
