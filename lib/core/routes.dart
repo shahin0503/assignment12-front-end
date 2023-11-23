@@ -5,6 +5,7 @@ import 'package:assignment12_front_end/presentation/screens/auth/providers/login
 import 'package:assignment12_front_end/presentation/screens/auth/providers/signup_provider.dart';
 import 'package:assignment12_front_end/presentation/screens/auth/signup_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/blog/blog_details_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/blog/create_edit_blog_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/home/home_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/splash/splash_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/user/edit_profile_screen.dart';
@@ -44,11 +45,16 @@ class Routes {
         return CupertinoPageRoute(
           builder: (context) => const EditProfileScreen(),
         );
+      case CreateEditBlogScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => const CreateEditBlogScreen(),
+        );
       case BlogDetailsScreen.routeName:
         return CupertinoPageRoute(
-            builder: (context) => BlogDetailsScreen(
-                  blogModel: settings.arguments as BlogModel,
-                ));
+          builder: (context) => BlogDetailsScreen(
+            blogModel: settings.arguments as BlogModel,
+          ),
+        );
 
       default:
         return null;

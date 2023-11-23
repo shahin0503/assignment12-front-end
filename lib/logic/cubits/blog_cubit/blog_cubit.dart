@@ -3,26 +3,72 @@ import 'package:assignment12_front_end/data/repositories/blog_repository.dart';
 import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BlogCubit extends Cubit<BlogState>{
-  BlogCubit() : super(BlogInitialState()){
-    _initialize();
+class BlogCubit extends Cubit<BlogState> {
+  final BlogRepository _blogRepository = BlogRepository();
+
+  BlogCubit() : super(BlogInitialState()) {
+    getAllBlogs();
   }
 
- final BlogRepository _blogRepository = BlogRepository();
-
-
-  void _initialize() async {
-    emit(BlogLoadingState(state.blogs));
+  // Fetch all blogs
+  void getAllBlogs() async {
+    emit(BlogLoadingState(blogs: state.blogs));
 
     try {
-
-      List<BlogModel> blogs =
-          await _blogRepository.fetchAllBlogs();
-
-      emit(BlogLoadedState(blogs));
-
+      List<BlogModel> blogs = await _blogRepository.fetchAllBlogs();
+      emit(BlogLoadedState(loadedBlogs: blogs));
     } catch (error) {
-      
+      emit(BlogErrorState(state.blogs, error.toString()));
+    }
+  }
+
+  // Fetch a single blog by ID
+  void getBlogById(String blogId) async {
+    emit(BlogLoadingState(blogs: state.blogs));
+
+    try {
+      BlogModel blog = await _blogRepository.fetchBlogById(blogId);
+      emit(BlogLoadedState(loadedBlogs: [blog]));
+    } catch (error) {
+      emit(BlogErrorState(state.blogs, error.toString()));
+    }
+  }
+
+  // Update a blog
+  void updateBlog(BlogModel updatedBlog) async {
+    emit(BlogLoadingState(blogs: state.blogs));
+
+    try {
+      await _blogRepository.updateBlog(updatedBlog);
+      // Fetch all blogs again after updating
+      getAllBlogs();
+    } catch (error) {
+      emit(BlogErrorState(state.blogs, error.toString()));
+    }
+  }
+
+  // Add a new blog
+  void addBlog(BlogModel newBlog) async {
+    emit(BlogLoadingState(blogs: state.blogs));
+
+    try {
+      await _blogRepository.addBlog(newBlog);
+      // Fetch all blogs again after adding
+      getAllBlogs();
+    } catch (error) {
+      emit(BlogErrorState(state.blogs, error.toString()));
+    }
+  }
+
+  // Delete a blog
+  void deleteBlog(String blogId) async {
+    emit(BlogLoadingState(blogs: state.blogs));
+
+    try {
+      await _blogRepository.deleteBlog(blogId);
+      // Fetch all blogs again after deleting
+      getAllBlogs();
+    } catch (error) {
       emit(BlogErrorState(state.blogs, error.toString()));
     }
   }

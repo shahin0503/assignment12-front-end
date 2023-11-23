@@ -2,6 +2,7 @@ import 'package:assignment12_front_end/core/ui.dart';
 import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_state.dart';
 import 'package:assignment12_front_end/presentation/screens/blog/blog_details_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/blog/create_edit_blog_screen.dart';
 import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -99,7 +100,12 @@ class _BlogsScreenState extends State<BlogsScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(
+            context,
+            CreateEditBlogScreen.routeName,
+          );
+        },
         child: const Icon(
           Icons.add_task,
         ),

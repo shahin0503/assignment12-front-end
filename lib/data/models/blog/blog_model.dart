@@ -1,8 +1,10 @@
+import 'package:assignment12_front_end/data/models/user/user_model.dart';
+
 class BlogModel {
   String? id;
   String? title;
   String? description;
-  String? userId;
+  UserModel? author;
   String? image;
   String? category;
 
@@ -10,7 +12,7 @@ class BlogModel {
     this.id,
     this.title,
     this.description,
-    this.userId,
+    this.author,
     this.image,
     this.category,
   });
@@ -19,19 +21,20 @@ class BlogModel {
     id = json['_id'];
     title = json['title'];
     description = json['content'];
-    userId = json['userId'];
+    author = UserModel.fromJson(json['author']);
     image = json['image'];
     category = json['category'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.id;
-    data['title'] = this.title;
-    data['content'] = this.description;
-    data['userId'] = this.userId;
-    data['image'] = this.image;
-    data['category'] = this.category;
+    final Map<String, dynamic> data = {
+      '_id': id,
+      'title': title,
+      'content': description,
+      'author': author?.toJson(),
+      if (image != null) 'image': image,
+      'category': category,
+    };
     return data;
   }
 }
