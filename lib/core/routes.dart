@@ -7,6 +7,7 @@ import 'package:assignment12_front_end/presentation/screens/auth/signup_screen.d
 import 'package:assignment12_front_end/presentation/screens/blog/blog_details_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/blog/create_edit_blog_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/home/home_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/project/project_list_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/splash/splash_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/user/edit_profile_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/user/user_details_screen.dart';
@@ -55,6 +56,13 @@ class Routes {
         return CupertinoPageRoute(
           builder: (context) => BlogDetailsScreen(
             blogModel: settings.arguments as BlogModel,
+          ),
+        );
+
+      case ProjectListScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => ProjectListScreen(
+              userId: settings.arguments as String,
           ),
         );
 

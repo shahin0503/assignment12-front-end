@@ -2,9 +2,9 @@ import 'package:assignment12_front_end/core/ui.dart';
 import 'package:assignment12_front_end/data/models/user/user_model.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_state.dart';
+import 'package:assignment12_front_end/presentation/screens/project/project_list_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/user/edit_profile_screen.dart';
 import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
-import 'package:assignment12_front_end/presentation/widgets/link_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,30 +45,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.all(16),
       children: [
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(
-              child: ClipOval(
-                child: CachedNetworkImage(
-                  width: MediaQuery.of(context).size.width / 3,
-                  height: MediaQuery.of(context).size.width / 3,
-                  fit: BoxFit.cover,
-                  imageUrl: '${userModel.image}',
-                ),
+            ClipOval(
+              child: CachedNetworkImage(
+                width: MediaQuery.of(context).size.width / 3,
+                height: MediaQuery.of(context).size.width / 3,
+                fit: BoxFit.cover,
+                imageUrl: '${userModel.image}',
               ),
             ),
             const GapWidget(),
-            Center(
-              child: Text(
-                '${userModel.fullName}',
-                style: TextStyles.heading3,
-              ),
+            Text(
+              '${userModel.fullName}',
+              style: TextStyles.heading3,
             ),
-            Center(
-              child: Text(
-                '${userModel.email}',
-                style: TextStyles.body2,
-              ),
+            Text(
+              '${userModel.email}',
+              style: TextStyles.body2,
             ),
             Text(
               '${userModel.bio}',
@@ -76,17 +70,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            LinkButton(
-              onPressed: () {
-                Navigator.pushNamed(context, EditProfileScreen.routeName);
-              },
-              text: 'Edit Profile',
-            ),
+            const GapWidget(),
           ],
         ),
         const Divider(),
         ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, EditProfileScreen.routeName);
+          },
+          contentPadding: EdgeInsets.zero,
+          leading: const Icon(
+            CupertinoIcons.person,
+          ),
+          title: Text(
+            'Edit Profile',
+            style: TextStyles.body1,
+          ),
+        ),
+        ListTile(
+          onTap: () {
+            Navigator.pushNamed(
+              context,
+              ProjectListScreen.routeName,
+              arguments: userModel.id
+            );
+          },
           contentPadding: EdgeInsets.zero,
           leading: const Icon(
             CupertinoIcons.cube_box_fill,

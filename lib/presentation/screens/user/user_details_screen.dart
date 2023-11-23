@@ -3,6 +3,7 @@ import 'package:assignment12_front_end/data/models/user/user_model.dart';
 import 'package:assignment12_front_end/logic/cubits/project_cubit/project_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/project_cubit/project_state.dart';
 import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
+import 'package:assignment12_front_end/presentation/widgets/project_display.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,9 +68,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         child: Text(
                           '${widget.userModel.fullName}',
                           style: TextStyles.body1.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.accent
-                          ),
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.accent),
                         ),
                       ),
                       const GapWidget(
@@ -87,76 +87,25 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                       Text(
                         'Bio',
                         style: TextStyles.body1.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.accent
-                        ),
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.accent),
                       ),
-                      Text('${widget.userModel.bio}', style: TextStyles.body2,),
-                      const GapWidget(size: -5,),
+                      Text(
+                        '${widget.userModel.bio}',
+                        style: TextStyles.body2,
+                      ),
+                      const GapWidget(
+                        size: -5,
+                      ),
                       Text(
                         'Projects',
                         style: TextStyles.body1.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      for (var project in state.projects)
-                        Card(
-                          elevation: 2,
-                          child: Theme(
-                            data: Theme.of(context).copyWith(
-                              dividerColor: Colors.transparent,
-                            ),
-                            child: ExpansionTile(
-                              title: Text(
-                                project.title!,
-                                style: TextStyles.body1.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color:AppColors.accent,
-                                ),
-                              ),
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(left: 16.0),
-                                  alignment: Alignment.topLeft,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Description:',
-                                        style: TextStyles.body2.copyWith(
-                                          color: AppColors.accent,
-                                        ),
-                                      ),
-                                      Text(project.description!),
-                                      Text(
-                                        'Technologies used:',
-                                        style: TextStyles.body2.copyWith(
-                                          color: AppColors.accent,
-                                        ),
-                                      ),
-                                      Text(project.technologiesUsed!.join(',')),
-                                      Text(
-                                        'GitUrl:',
-                                        style: TextStyles.body2.copyWith(
-                                          color: AppColors.accent,
-                                        ),
-                                      ),
-                                      Text(project.gitUrl!),
-                                      Text(
-                                        'DemoUrl:',
-                                        style: TextStyles.body2.copyWith(
-                                          color: AppColors.accent,
-                                        ),
-                                      ),
-                                      Text(project.demoUrl!),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        )
+                      ProjectDisplayWidget(
+                        projects: state.projects,
+                      ),
                     ],
                   ),
                 ),
