@@ -22,17 +22,6 @@ class BlogCubit extends Cubit<BlogState> {
     }
   }
 
-  // Fetch a single blog by ID
-  void getBlogById(String blogId) async {
-    emit(BlogLoadingState(blogs: state.blogs));
-
-    try {
-      BlogModel blog = await _blogRepository.fetchBlogById(blogId);
-      emit(BlogLoadedState(loadedBlogs: [blog]));
-    } catch (error) {
-      emit(BlogErrorState(state.blogs, error.toString()));
-    }
-  }
 
   // Update a blog
   void updateBlog(BlogModel updatedBlog, String blogId) async {
