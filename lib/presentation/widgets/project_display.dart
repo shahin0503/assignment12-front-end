@@ -1,7 +1,10 @@
 import 'package:assignment12_front_end/data/models/project/project_model.dart';
+import 'package:assignment12_front_end/logic/cubits/project_cubit/project_cubit.dart';
 import 'package:assignment12_front_end/presentation/screens/project/create_edit_project_screen.dart';
+import 'package:assignment12_front_end/presentation/widgets/generic_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment12_front_end/core/ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProjectDisplayWidget extends StatelessWidget {
   final List<ProjectModel> projects;
@@ -68,7 +71,28 @@ class ProjectDisplayWidget extends StatelessWidget {
                                   ),
                                 IconButton(
                                   icon: const Icon(Icons.delete),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return GenericDialog(
+                                          title: 'Delete Confirmation',
+                                          content:
+                                              'Are you sure you want to delete?',
+                                          onConfirm: () {
+                                            BlocProvider.of<ProjectCubit>(
+                                                    context)
+                                                .deleteProject(
+                                              project.id!,
+                                              project.userId!,
+                                            );
+                                          },
+                                          confirmButtonText: 'Delete',
+                                          cancelButtonText: 'Cancel',
+                                        );
+                                      },
+                                    );
+                                  },
                                 ),
                               ],
                             ),

@@ -55,4 +55,20 @@ class ProjectRepository {
       rethrow;
     }
   }
+
+  Future<void> deleteProject(String projectId) async {
+    try {
+      Response response = await _api.sendRequest.delete(
+        '/projects/$projectId',
+      );
+
+      ApiResponse apiResponse = ApiResponse.fromResponse(response);
+
+      if (!apiResponse.success) {
+        throw apiResponse.message.toString();
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

@@ -41,4 +41,15 @@ class ProjectCubit extends Cubit<ProjectState> {
       emit(ProjectErrorState(state.projects, error.toString()));
     }
   }
+
+  void deleteProject(String projectId, String userId) async {
+    emit(ProjectLoadingState(state.projects));
+
+    try {
+      await _projectRepository.deleteProject(projectId);
+      fetchProjectByUserId(userId);
+    } catch (error) {
+      emit(ProjectErrorState(state.projects, error.toString()));
+    }
+  }
 }
