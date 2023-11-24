@@ -50,13 +50,19 @@ class _BlogsScreenState extends State<BlogsScreen> {
                   child: Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: CachedNetworkImage(
-                          width: MediaQuery.of(context).size.width / 4,
-                          height: MediaQuery.of(context).size.width / 4,
-                          fit: BoxFit.cover,
-                          imageUrl: '${blog.image}',
+                        padding: const EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: CachedNetworkImage(
+                            width: MediaQuery.of(context).size.width / 3.5,
+                            height: MediaQuery.of(context).size.width / 3,
+                            fit: BoxFit.cover,
+                            imageUrl: '${blog.image}',
+                          ),
                         ),
+                      ),
+                      const GapWidget(
+                        size: -10,
                       ),
                       Flexible(
                         child: Column(
@@ -70,13 +76,16 @@ class _BlogsScreenState extends State<BlogsScreen> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            Text(
-                              '${blog.category}',
-                              style: TextStyles.body2.copyWith(
-                                color: AppColors.textLight,
+                            Chip(
+                              label: Text(
+                                '${blog.category}',
+                                style: TextStyles.body2.copyWith(
+                                  color: AppColors.textLight,
+                                ),
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                              shape: StadiumBorder(),
+                              backgroundColor:
+                                  Color.fromARGB(255, 235, 202, 235), // Customize the background color
                             ),
                             const GapWidget(
                               size: -10,
