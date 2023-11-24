@@ -1,4 +1,5 @@
 import 'package:assignment12_front_end/data/models/project/project_model.dart';
+import 'package:assignment12_front_end/presentation/screens/project/create_edit_project_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:assignment12_front_end/core/ui.dart';
 
@@ -38,11 +39,40 @@ class ProjectDisplayWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Description:',
-                          style: TextStyles.body2.copyWith(
-                            color: AppColors.accent,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Description:',
+                              style: TextStyles.body2.copyWith(
+                                color: AppColors.accent,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                if (choice == true)
+                                  IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        CreateEditProjectScreen.routeName,
+                                        arguments: ProjectPreferences(
+                                          projectChoice: true,
+                                          projectModel: project,
+                                          userId: project.userId!,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                         Text(project.description!),
                         Text(
@@ -66,20 +96,6 @@ class ProjectDisplayWidget extends StatelessWidget {
                           ),
                         ),
                         Text(project.demoUrl!),
-                        if (choice == true)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.edit),
-                                onPressed: () {},
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.delete),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
                       ],
                     ),
                   )

@@ -38,4 +38,21 @@ class ProjectRepository {
       rethrow;
     }
   }
+
+  Future<void> updateProject(
+      ProjectModel updatedProject, String projectId) async {
+    try {
+      Map<String, dynamic> projectJson = updatedProject.toJson();
+      Response response =
+          await _api.sendRequest.put('/projects/$projectId', data: projectJson);
+
+      ApiResponse apiResponse = ApiResponse.fromResponse(response);
+
+      if (!apiResponse.success) {
+        throw apiResponse.message.toString();
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

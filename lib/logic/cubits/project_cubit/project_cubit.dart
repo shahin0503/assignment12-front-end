@@ -30,4 +30,15 @@ class ProjectCubit extends Cubit<ProjectState> {
       emit(ProjectErrorState(state.projects, error.toString()));
     }
   }
+
+  void updateProject(ProjectModel updatedProject, String projectId) async {
+    emit(ProjectLoadingState(state.projects));
+
+    try {
+      await _projectRepository.updateProject(updatedProject, projectId);
+      fetchProjectByUserId(updatedProject.userId!);
+    } catch (error) {
+      emit(ProjectErrorState(state.projects, error.toString()));
+    }
+  }
 }

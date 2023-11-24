@@ -159,6 +159,19 @@ class _CreateEditProjectScreenState extends State<CreateEditProjectScreen> {
                           userId: widget.projectPreferences.userId,
                         );
                         context.read<ProjectCubit>().addProject(newProject);
+                      } else {
+                        final updatedProject = ProjectModel(
+                          title: _titleController.text,
+                          description: _descriptionController.text,
+                          gitUrl: _gitUrlController.text,
+                          demoUrl: _demoUrlController.text,
+                          technologiesUsed: technologiesUsed,
+                          userId: widget.projectPreferences.userId,
+                        );
+                        context.read<ProjectCubit>().updateProject(
+                              updatedProject,
+                              widget.projectPreferences.projectModel!.id!,
+                            );
                       }
                       Navigator.of(context).pop();
                     },
