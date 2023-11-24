@@ -1,4 +1,5 @@
 import 'package:assignment12_front_end/data/models/blog/blog_model.dart';
+import 'package:assignment12_front_end/data/models/project/project_model.dart';
 import 'package:assignment12_front_end/data/models/user/user_model.dart';
 import 'package:assignment12_front_end/presentation/screens/auth/login_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/auth/providers/login_provider.dart';
@@ -7,6 +8,7 @@ import 'package:assignment12_front_end/presentation/screens/auth/signup_screen.d
 import 'package:assignment12_front_end/presentation/screens/blog/blog_details_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/blog/create_edit_blog_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/home/home_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/project/create_edit_project_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/project/project_list_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/splash/splash_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/user/edit_profile_screen.dart';
@@ -62,7 +64,13 @@ class Routes {
       case ProjectListScreen.routeName:
         return CupertinoPageRoute(
           builder: (context) => ProjectListScreen(
-              userId: settings.arguments as String,
+            userId: settings.arguments as String,
+          ),
+        );
+      case CreateEditProjectScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => CreateEditProjectScreen(
+            projectPreferences: settings.arguments as ProjectPreferences,
           ),
         );
 

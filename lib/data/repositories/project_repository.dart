@@ -21,4 +21,21 @@ class ProjectRepository {
       rethrow;
     }
   }
+
+  Future<void> addProject(ProjectModel newProject) async {
+    try {
+      Map<String, dynamic> projectJson = newProject.toJson();
+
+      Response response =
+          await _api.sendRequest.post('/projects', data: projectJson);
+
+      ApiResponse apiResponse = ApiResponse.fromResponse(response);
+
+      if (!apiResponse.success) {
+        throw apiResponse.message.toString();
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

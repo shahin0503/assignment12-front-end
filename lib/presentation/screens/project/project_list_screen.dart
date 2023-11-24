@@ -1,5 +1,7 @@
+import 'package:assignment12_front_end/data/models/project/project_model.dart';
 import 'package:assignment12_front_end/logic/cubits/project_cubit/project_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/project_cubit/project_state.dart';
+import 'package:assignment12_front_end/presentation/screens/project/create_edit_project_screen.dart';
 import 'package:assignment12_front_end/presentation/widgets/project_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +50,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
             children: [
               ProjectDisplayWidget(
                 projects: state.projects,
+                choice: true,
               ),
             ],
           );
@@ -55,7 +58,14 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+          Navigator.pushNamed(
+            context,
+            CreateEditProjectScreen.routeName,
+            arguments: ProjectPreferences(
+              projectChoice: false,
+              userId: widget.userId,
+            ),
+          );
         },
         child: const Icon(
           Icons.add,

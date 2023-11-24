@@ -4,8 +4,13 @@ import 'package:assignment12_front_end/core/ui.dart';
 
 class ProjectDisplayWidget extends StatelessWidget {
   final List<ProjectModel> projects;
+  final bool? choice;
 
-  const ProjectDisplayWidget({super.key, required this.projects});
+  const ProjectDisplayWidget({
+    super.key,
+    required this.projects,
+    this.choice = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +66,20 @@ class ProjectDisplayWidget extends StatelessWidget {
                           ),
                         ),
                         Text(project.demoUrl!),
+                        if (choice == true)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.edit),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   )

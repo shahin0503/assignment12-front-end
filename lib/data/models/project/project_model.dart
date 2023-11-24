@@ -40,3 +40,15 @@ class ProjectModel {
     return data;
   }
 }
+
+class ProjectPreferences {
+  final bool projectChoice;
+  final ProjectModel? projectModel;
+  final String userId;
+
+  ProjectPreferences({
+    required this.projectChoice,
+    this.projectModel,
+    required this.userId,
+  });
+}

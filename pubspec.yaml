@@ -43,6 +43,7 @@ dependencies:
   email_validator: ^2.1.17
   image_picker: ^1.0.4
   cached_network_image: ^3.3.0
+  material_tag_editor: ^0.1.2
 
 dev_dependencies:
   flutter_test:
