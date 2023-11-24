@@ -7,6 +7,7 @@ import 'package:assignment12_front_end/presentation/screens/auth/providers/signu
 import 'package:assignment12_front_end/presentation/screens/auth/signup_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/blog/blog_details_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/blog/create_edit_blog_screen.dart';
+import 'package:assignment12_front_end/presentation/screens/contact/contact_form_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/home/home_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/project/create_edit_project_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/project/project_list_screen.dart';
@@ -72,6 +73,10 @@ class Routes {
           builder: (context) => CreateEditProjectScreen(
             projectPreferences: settings.arguments as ProjectPreferences,
           ),
+        );
+      case ContactFormScreen.routeName:
+        return CupertinoPageRoute(
+          builder: (context) => const ContactFormScreen(),
         );
 
       default:

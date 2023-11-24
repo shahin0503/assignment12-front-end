@@ -1,5 +1,6 @@
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:assignment12_front_end/logic/cubits/user_cubit/user_state.dart';
+import 'package:assignment12_front_end/presentation/screens/contact/contact_form_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/home/blogs_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/home/user_feed_screen.dart';
 import 'package:assignment12_front_end/presentation/screens/home/profile_screen.dart';
@@ -35,6 +36,19 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Blogfolio'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  ContactFormScreen.routeName,
+                );
+              },
+              icon: const Icon(
+                Icons.contact_page,
+              ),
+            ),
+          ],
         ),
         body: screens[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
