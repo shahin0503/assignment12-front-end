@@ -17,7 +17,7 @@ class SignupProvider with ChangeNotifier {
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final cPasswordController = TextEditingController();
+  final fullNameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   StreamSubscription? _userSubscription;
 
@@ -46,9 +46,11 @@ class SignupProvider with ChangeNotifier {
 
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
+    String fullName = fullNameController.text.trim();
     BlocProvider.of<UserCubit>(context).createAccount(
       email: email,
       password: password,
+      fullName: fullName,
     );
   }
 

@@ -8,6 +8,7 @@ import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
 import 'package:assignment12_front_end/presentation/widgets/link_button.dart';
 import 'package:assignment12_front_end/presentation/widgets/primary_button.dart';
 import 'package:assignment12_front_end/presentation/widgets/primary_textfield.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,20 +24,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _isPasswordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LoginProvider>(context);
     return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
         if (state is UserLoggedInState) {
-          Navigator.pushReplacementNamed(context, SplashScreen.routeName);
+          Navigator.pushReplacementNamed(
+            context,
+            SplashScreen.routeName,
+          );
         }
       },
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          title: const Text('Blogofolio'),
+          title: Text(
+            'Blogfolio',
+            style: TextStyles.heading2.copyWith(
+              color: AppColors.accent,
+            ),
+          ),
         ),
         body: SafeArea(
             child: Form(
@@ -44,9 +55,24 @@ class _LoginScreenState extends State<LoginScreen> {
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
-              Text(
-                'Log In',
-                style: TextStyles.heading2,
+              Center(
+                child: ClipOval(
+                  child: CachedNetworkImage(
+                    width: MediaQuery.of(context).size.width / 2,
+                    height: MediaQuery.of(context).size.width / 2,
+                    fit: BoxFit.cover,
+                    imageUrl:
+                        'https://image.freepik.com/vector-gratis/concepto-blogs-personajes_23-2148653962.jpg',
+                  ),
+                ),
+              ),
+              Center(
+                child: Text(
+                  'Login',
+                  style: TextStyles.heading2.copyWith(
+                    color: AppColors.accent,
+                  ),
+                ),
               ),
               const GapWidget(
                 size: -10,
@@ -63,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
               PrimaryTextField(
                 controller: provider.emailController,
                 labelText: 'Email Address',
+                prefixIcon: const Icon(Icons.email),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Email Address is required!';
@@ -76,22 +103,26 @@ class _LoginScreenState extends State<LoginScreen> {
               PrimaryTextField(
                 controller: provider.passwordController,
                 labelText: 'Password',
-                obscureText: true,
+                obscureText: !_isPasswordVisible,
+                prefixIcon: const Icon(Icons.key),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
                     return 'Password is required!';
                   }
                   return null;
                 },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  LinkButton(
-                    text: 'Forgot password?',
-                    onPressed: () {},
-                  ),
-                ],
               ),
               const GapWidget(),
               PrimaryButton(

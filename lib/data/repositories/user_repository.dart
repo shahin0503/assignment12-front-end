@@ -10,12 +10,14 @@ class UserRepository {
   Future<UserModel> signup({
     required String email,
     required String password,
+    required String fullName,
   }) async {
     try {
       Response response = await _api.sendRequest.post('/users/signup',
           data: jsonEncode({
             'email': email,
             'password': password,
+            'fullName': fullName,
           }));
 
       ApiResponse apiResponse = ApiResponse.fromResponse(response);
@@ -87,7 +89,6 @@ class UserRepository {
 
       //convert raw data to model
       return UserModel.fromJson(apiResponse.data);
-      
     } catch (error) {
       rethrow;
     }
@@ -109,6 +110,4 @@ class UserRepository {
       rethrow;
     }
   }
-
-  
 }
