@@ -101,6 +101,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                         'Projects',
                         style: TextStyles.body1.copyWith(
                           fontWeight: FontWeight.bold,
+                          color: AppColors.accent,
                         ),
                       ),
                       ProjectDisplayWidget(

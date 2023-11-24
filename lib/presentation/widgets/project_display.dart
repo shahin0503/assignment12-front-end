@@ -46,10 +46,8 @@ class ProjectDisplayWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Description:',
-                              style: TextStyles.body2.copyWith(
-                                color: AppColors.accent,
-                              ),
+                              project.description!,
+                              style: TextStyles.body2,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -69,57 +67,58 @@ class ProjectDisplayWidget extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return GenericDialog(
-                                          title: 'Delete Confirmation',
-                                          content:
-                                              'Are you sure you want to delete?',
-                                          onConfirm: () {
-                                            BlocProvider.of<ProjectCubit>(
-                                                    context)
-                                                .deleteProject(
-                                              project.id!,
-                                              project.userId!,
-                                            );
-                                          },
-                                          confirmButtonText: 'Delete',
-                                          cancelButtonText: 'Cancel',
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
+                                if (choice == true)
+                                  IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return GenericDialog(
+                                            title: 'Delete Confirmation',
+                                            content:
+                                                'Are you sure you want to delete?',
+                                            onConfirm: () {
+                                              BlocProvider.of<ProjectCubit>(
+                                                      context)
+                                                  .deleteProject(
+                                                project.id!,
+                                                project.userId!,
+                                              );
+                                            },
+                                            confirmButtonText: 'Delete',
+                                            cancelButtonText: 'Cancel',
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
                               ],
                             ),
                           ],
                         ),
-                        Text(project.description!),
-                        Text(
-                          'Technologies used:',
-                          style: TextStyles.body2.copyWith(
-                            color: AppColors.accent,
-                          ),
+                        Wrap(
+                          spacing: 8.0,
+                          children: project.technologiesUsed!
+                              .map((technology) => Chip(
+                                    label: Text(
+                                      technology,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        Color.fromARGB(255, 224, 196, 229),
+                                    shape: const StadiumBorder(),
+                                  ))
+                              .toList(),
                         ),
-                        Text(project.technologiesUsed!.join(',')),
-                        Text(
-                          'GitUrl:',
-                          style: TextStyles.body2.copyWith(
-                            color: AppColors.accent,
-                          ),
-                        ),
-                        Text(project.gitUrl!),
-                        Text(
-                          'DemoUrl:',
-                          style: TextStyles.body2.copyWith(
-                            color: AppColors.accent,
-                          ),
-                        ),
-                        Text(project.demoUrl!),
+                        if (project.gitUrl != null &&
+                            project.gitUrl!.isNotEmpty)
+                          Text(project.gitUrl!),
+                        if (project.demoUrl != null &&
+                            project.demoUrl!.isNotEmpty)
+                          Text(project.demoUrl!),
                       ],
                     ),
                   )
