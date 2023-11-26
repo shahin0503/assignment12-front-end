@@ -83,9 +83,9 @@ class _BlogsScreenState extends State<BlogsScreen> {
                                   color: AppColors.textLight,
                                 ),
                               ),
-                              shape: StadiumBorder(),
+                              shape: const StadiumBorder(),
                               backgroundColor:
-                                  Color.fromARGB(255, 235, 202, 235), // Customize the background color
+                                  const Color.fromARGB(255, 235, 202, 235), // Customize the background color
                             ),
                             const GapWidget(
                               size: -10,

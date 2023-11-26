@@ -1,5 +1,9 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:assignment12_front_end/core/ui.dart';
 import 'package:assignment12_front_end/data/models/blog/blog_model.dart';
+import 'package:assignment12_front_end/data/repositories/blog_repository.dart';
 import 'package:assignment12_front_end/logic/cubits/blog_cubit/blog_cubit.dart';
 import 'package:assignment12_front_end/presentation/widgets/gap_widget.dart';
 import 'package:assignment12_front_end/presentation/widgets/primary_button.dart';
@@ -7,6 +11,7 @@ import 'package:assignment12_front_end/presentation/widgets/primary_textfield.da
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateEditBlogScreen extends StatefulWidget {
   final BlogPreferences blogPreferences;
@@ -26,6 +31,8 @@ class _CreateEditBlogScreenState extends State<CreateEditBlogScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   String _selectedCategory = 'Comedy';
   String imageUrl = '';
+    File? _image;
+
 
   @override
   void initState() {
@@ -39,6 +46,34 @@ class _CreateEditBlogScreenState extends State<CreateEditBlogScreen> {
     }
   }
 
+  Future<void> _getImage() async {
+    final imagePicker = ImagePicker();
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        imageUrl = ''; 
+
+        _uploadImage();
+      }
+    });
+  }
+
+Future<void> _uploadImage() async {
+    try {
+      if (_image != null) {
+     final response =  await BlogRepository().uploadBlogImage(_image!);
+     log('response: $response');
+        setState(() {
+          imageUrl = response; 
+        });
+      }
+    } catch (error) {
+      log("Error uploading image: $error");
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,14 +89,23 @@ class _CreateEditBlogScreenState extends State<CreateEditBlogScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CachedNetworkImage(
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: MediaQuery.of(context).size.width / 2,
-                      fit: BoxFit.cover,
-                      imageUrl: imageUrl,
-                    ),
+                  GestureDetector(
+                    onTap: _getImage,
+                    child: _image != null
+                        ? Image.file(
+                            _image!,
+                            width: MediaQuery.of(context).size.width / 2,
+                            height: MediaQuery.of(context).size.width / 2,
+                            fit: BoxFit.cover,
+                          )
+                        : (imageUrl.isNotEmpty
+                            ? CachedNetworkImage(
+                                width: MediaQuery.of(context).size.width / 2,
+                                height: MediaQuery.of(context).size.width / 2,
+                                fit: BoxFit.cover,
+                                imageUrl: imageUrl,
+                              )
+                            : Icon(Icons.image)), // Display an icon if no image selected
                   ),
                   const GapWidget(),
                   PrimaryTextField(
@@ -114,12 +158,14 @@ class _CreateEditBlogScreenState extends State<CreateEditBlogScreen> {
                           title: _titleController.text,
                           description: _descriptionController.text,
                           category: _selectedCategory,
+                          image: imageUrl,
                         );
                         context.read<BlogCubit>().addBlog(newBlog);
                       } else {
                         final updatedBlog = BlogModel(
                           title: _titleController.text,
                           description: _descriptionController.text,
+                          image: imageUrl,
                           category: _selectedCategory,
                         );
                         context.read<BlogCubit>().updateBlog(

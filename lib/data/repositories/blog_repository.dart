@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:assignment12_front_end/core/api.dart';
 import 'package:assignment12_front_end/data/models/blog/blog_model.dart';
 import 'package:dio/dio.dart';
@@ -80,6 +82,29 @@ class BlogRepository {
       if (!apiResponse.success) {
         throw apiResponse.message.toString();
       }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<String> uploadBlogImage(File imageFile) async {
+    try {
+      FormData formData = FormData.fromMap({
+        'image': await MultipartFile.fromFile(
+          imageFile.path,
+        ),
+      });
+
+      Response response =
+          await _api.sendRequest.post('/images/blogs', data: formData);
+
+      ApiResponse apiResponse = ApiResponse.fromResponse(response);
+
+      if (!apiResponse.success) {
+        throw apiResponse.message.toString();
+      }
+
+      return apiResponse.data;
     } catch (error) {
       rethrow;
     }

@@ -90,11 +90,16 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                         color: AppColors.accent,
                       ),
                     ),
-                    Text(
-                      '${widget.blogModel.category}',
-                      style: TextStyles.body1.copyWith(
-                        color: AppColors.textLight,
+                    Chip(
+                      label: Text(
+                        '${widget.blogModel.category}',
+                        style: TextStyles.body2.copyWith(
+                          color: AppColors.textLight,
+                        ),
                       ),
+                      shape: const StadiumBorder(),
+                      backgroundColor: const Color.fromARGB(
+                          255, 235, 202, 235), // Customize the background color
                     ),
                     const GapWidget(
                       size: -10,
@@ -118,11 +123,14 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                     ),
                     Container(
                       padding: const EdgeInsets.all(8.0),
-                      child: CachedNetworkImage(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.width / 2,
-                        fit: BoxFit.cover,
-                        imageUrl: '${widget.blogModel.image}',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: CachedNetworkImage(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width / 2,
+                          fit: BoxFit.cover,
+                          imageUrl: '${widget.blogModel.image}',
+                        ),
                       ),
                     ),
                     const GapWidget(),
